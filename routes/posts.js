@@ -1,21 +1,18 @@
 const { Router } = require('express');
 const router = Router();
 
-
-
 router
 .get('/', (req, res) => {
-    console.log('get post')
+    res.send('get post ASD')
 })
 
 .get('/:id', (req, res) => {
     const { id } = req.params;
-    console.log('get post', id)
+    res.send('get post', id)
 })
 
 .post('/', (req, res) => {
-    console.log('post post')
+    res.send('post post')
 })
-
 
 module.exports = router;
