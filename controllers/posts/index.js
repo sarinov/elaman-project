@@ -11,4 +11,4 @@ methods.get = function (req, res) {
     console.log(req.body);
 }
 
-module.exports = methods
+module.exports = methods;

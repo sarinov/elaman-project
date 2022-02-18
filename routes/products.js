@@ -8,15 +8,13 @@ const prodsArr = [
 
 router
 .get('/',(req, res) => {
-    res.send(prodsArr)
+    res.status(500).send(prodsArr)
 })
 
 .delete('/:id', (req, res) => {
     const { id } = req.params
     prodsArr.splice(id, 1)
-    res.send('ok')
-    console.log(prodsArr)
-
+    res.send(200).send('ok')
 })
 
 module.exports = router;
