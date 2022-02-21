@@ -20,3 +20,12 @@ app.get('/', async (req, res) => {
     res.send('ok');
 })
 
+app.use(async (err, req, res, next) => {
+    //console.error(req.method + ' ' + req.originalUrl);
+    //console.error(req.user);
+    console.error(err);
+    res.status(500).json(new Response().error({
+        message: err.message,
+        stack: err.stack
+    }));
+})
