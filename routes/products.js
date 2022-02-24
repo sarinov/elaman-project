@@ -37,4 +37,26 @@ router
         }
     })
 
+    .post('/update-prod', async (req, res) => {
+        const {id, name, description, price, amount} = req.body
+
+        try {
+            const result = await prodController.update(id, name, description, price, amount)
+            res.status(201).send(new Response().data(result));
+        } catch (err) {
+            res.status(500).send(new Response().error(err.message || err))
+        }
+    })
+
+    .post('/delete-prod', async (req, res) => {
+        const {id} = req.body
+
+        try {
+            const result = await prodController.delete(id)
+            res.status(201).send(new Response().data(result))
+        } catch (err) {
+            res.status(500).send(new Response().error(err.message || err))
+        }
+    })
+
 module.exports = router;

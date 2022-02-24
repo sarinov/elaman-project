@@ -4,7 +4,9 @@ const db = require('../../models')
 const methods = {
     create: null,
     get: null,
-    getAll: null
+    getAll: null,
+    update: null,
+    delete: null
 }
 
 methods.create = async function (name, description, price, amount) {
@@ -33,6 +35,33 @@ methods.get = async function (id) {
 methods.getAll = async function () {
     const products = await db.Product.findAll()
     return products
+}
+
+methods.update = async function (id, name, description, price, amount) {
+
+    const product = await db.Product.update({
+        name: name,
+        description: description,
+        price: price,
+        amount: amount
+    }, {
+        where: {
+            id
+        }
+    })
+
+    return product
+}
+
+methods.delete = async function (id) {
+
+    const product = await db.Product.destroy({
+        where: {
+            id
+        }
+    })
+
+    return product
 }
 
 module.exports = methods;
