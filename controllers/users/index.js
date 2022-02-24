@@ -13,7 +13,7 @@ methods.registration = async function (firstName, lastName, password, email) {
             email
         }
     })
-    if (user) throw 'User allready exist'
+    if (user) throw 'User already exist'
 
     const result = await db.User.create({
         firstName, lastName, password, email
@@ -22,7 +22,7 @@ methods.registration = async function (firstName, lastName, password, email) {
 }
 
 methods.login = async function (password, email) {
-    
+
     const user = await db.User.findOne({
         where: {
             email

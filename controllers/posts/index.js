@@ -6,7 +6,6 @@ const methods = {
 }
 
 
-
 methods.get = function (req, res) {
     console.log(req.body);
 }
