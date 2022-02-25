@@ -5,7 +5,7 @@ const Response = require('../utils/ApiResponse')
 
 router
 
-    .post('/create-prod', async (req, res) => {
+    .post('/', async (req, res) => {
         const {name, description, price, amount} = req.body
 
         try {
@@ -16,8 +16,8 @@ router
         }
     })
 
-    .get('/get-prod', async (req, res) => {
-        const {id} = req.body
+    .get('/:id', async (req, res) => {
+        const {id} = req.params
 
         try {
             const result = await prodController.get(id)
@@ -28,7 +28,7 @@ router
         }
     })
 
-    .get('/get-all-prods', async (req, res) => {
+    .get('/', async (req, res) => {
         try {
             const result = await prodController.getAll()
             res.status(200).send(new Response().data(result))
@@ -37,23 +37,23 @@ router
         }
     })
 
-    .post('/update-prod', async (req, res) => {
+    .put('/', async (req, res) => {
         const {id, name, description, price, amount} = req.body
 
         try {
             const result = await prodController.update(id, name, description, price, amount)
-            res.status(201).send(new Response().data(result));
+            res.status(200).send(new Response().data(result));
         } catch (err) {
             res.status(500).send(new Response().error(err.message || err))
         }
     })
 
-    .post('/delete-prod', async (req, res) => {
+    .delete('/', async (req, res) => {
         const {id} = req.body
 
         try {
             const result = await prodController.delete(id)
-            res.status(201).send(new Response().data(result))
+            res.status(200).send(new Response().data(result))
         } catch (err) {
             res.status(500).send(new Response().error(err.message || err))
         }

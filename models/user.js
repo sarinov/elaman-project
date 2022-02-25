@@ -11,17 +11,24 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
+            models.User.hasMany(models.Basket);
+            models.User.belongsTo(models.Companies);
+
         }
     }
 
     User.init({
-        firstName: DataTypes.STRING,
-        lastName: DataTypes.STRING,
+        first_name: DataTypes.STRING,
+        last_name: DataTypes.STRING,
         email: DataTypes.STRING,
-        password: DataTypes.STRING
+        password: DataTypes.STRING,
+        CompanyId: DataTypes.INTEGER,
+        role: DataTypes.STRING
     }, {
         sequelize,
         modelName: 'User',
     });
+
+
     return User;
 };

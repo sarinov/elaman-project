@@ -40,10 +40,7 @@ methods.getAll = async function () {
 methods.update = async function (id, name, description, price, amount) {
 
     const product = await db.Product.update({
-        name: name,
-        description: description,
-        price: price,
-        amount: amount
+        name, description, price, amount
     }, {
         where: {
             id

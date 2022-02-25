@@ -20,6 +20,15 @@ module.exports = {
             amount: {
                 type: Sequelize.INTEGER
             },
+            like: {
+                type: Sequelize.INTEGER
+            },
+            dislike: {
+                type: Sequelize.INTEGER
+            },
+            CategoryId: {
+                type: Sequelize.INTEGER
+            },
             createdAt: {
                 allowNull: true,
                 type: Sequelize.DATE,
