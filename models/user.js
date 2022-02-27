@@ -13,16 +13,17 @@ module.exports = (sequelize, DataTypes) => {
             // define association here
             models.User.hasMany(models.Basket);
             models.User.belongsTo(models.Companies);
+            models.User.hasMany(models.Comments);
 
         }
     }
 
     User.init({
-        first_name: DataTypes.STRING,
-        last_name: DataTypes.STRING,
+        firstName: DataTypes.STRING,
+        lastName: DataTypes.STRING,
         email: DataTypes.STRING,
         password: DataTypes.STRING,
-        CompanyId: DataTypes.INTEGER,
+        companyId: DataTypes.INTEGER,
         role: DataTypes.STRING
     }, {
         sequelize,

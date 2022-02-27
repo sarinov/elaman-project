@@ -26,7 +26,7 @@ module.exports = {
             dislike: {
                 type: Sequelize.INTEGER
             },
-            CategoryId: {
+            categoryId: {
                 type: Sequelize.INTEGER
             },
             createdAt: {

@@ -38,7 +38,6 @@ methods.getAll = async function () {
 }
 
 methods.update = async function (id, name, description, price, amount) {
-
     const product = await db.Product.update({
         name, description, price, amount
     }, {
@@ -51,7 +50,6 @@ methods.update = async function (id, name, description, price, amount) {
 }
 
 methods.delete = async function (id) {
-
     const product = await db.Product.destroy({
         where: {
             id

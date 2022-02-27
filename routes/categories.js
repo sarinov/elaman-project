@@ -1,15 +1,15 @@
 const {Router} = require('express');
 const router = Router();
-const prodController = require('../controllers/products')
-const Response = require('../utils/ApiResponse')
+const categoriesController = require('../controllers/categories');
+const Response = require("../utils/ApiResponse");
 
 router
 
     .post('/', async (req, res) => {
-        const {name, description, price, amount} = req.body
+        const {name, description} = req.body // ??? надо добавить колонку description
 
         try {
-            const result = await prodController.create(name, description, price, amount)
+            const result = await categoriesController.create(name, description)
             res.status(201).send(new Response().data(result))
         } catch (err) {
             res.status(500).send(new Response().error(err.message || err))
@@ -20,8 +20,8 @@ router
         const {id} = req.params
 
         try {
-            const result = await prodController.get(id)
-            if (!result) res.status(404).send(new Response().error('Product not found'));
+            const result = await categoriesController.get(id)
+            if (!result) res.status(404).send(new Response().error('Category not found'));
             res.status(200).send(new Response().data(result))
         } catch (err) {
             res.status(500).send(new Response().error(err.message || err));
@@ -30,7 +30,7 @@ router
 
     .get('/', async (req, res) => {
         try {
-            const result = await prodController.getAll()
+            const result = await categoriesController.getAll()
             res.status(200).send(new Response().data(result))
         } catch (err) {
             res.status(500).send(new Response().error(err.message || err))
@@ -38,10 +38,10 @@ router
     })
 
     .put('/', async (req, res) => {
-        const {id, name, description, price, amount} = req.body
+        const {id, name, description} = req.body
 
         try {
-            const result = await prodController.update(id, name, description, price, amount)
+            const result = await categoriesController.update(id, name, description)
             res.status(200).send(new Response().data(result));
         } catch (err) {
             res.status(500).send(new Response().error(err.message || err))
@@ -52,7 +52,7 @@ router
         const {id} = req.params
 
         try {
-            const result = await prodController.delete(id)
+            const result = await categoriesController.delete(id)
             res.status(200).send(new Response().data(result))
         } catch (err) {
             res.status(500).send(new Response().error(err.message || err))

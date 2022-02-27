@@ -36,22 +36,22 @@ methods.login = async function (password, email) {
     return user
 }
 
-methods.test = async function () {
-
-    const user = await db.Basket.findAll({
-        where:{
-            UserId: 1
-        },
-        include: [
-        {
-            model: db.Product
-            
-        }],
-        attributes:['Product.name']
-
-    })
-
-    return user
-}
+// methods.test = async function () {
+//
+//     const user = await db.Basket.findAll({
+//         where:{
+//             UserId: 1
+//         },
+//         include: [
+//         {
+//             model: db.Product
+//
+//         }],
+//         attributes:['Product.name']
+//
+//     })
+//
+//     return user
+// }
 
 module.exports = methods;

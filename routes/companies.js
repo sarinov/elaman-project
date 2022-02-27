@@ -1,15 +1,15 @@
 const {Router} = require('express');
 const router = Router();
-const prodController = require('../controllers/products')
-const Response = require('../utils/ApiResponse')
+const compsController = require('../controllers/companies');
+const Response = require("../utils/ApiResponse");
 
 router
 
     .post('/', async (req, res) => {
-        const {name, description, price, amount} = req.body
+        const {name, description, address} = req.body
 
         try {
-            const result = await prodController.create(name, description, price, amount)
+            const result = await compsController.create(name, description, address)
             res.status(201).send(new Response().data(result))
         } catch (err) {
             res.status(500).send(new Response().error(err.message || err))
@@ -20,8 +20,8 @@ router
         const {id} = req.params
 
         try {
-            const result = await prodController.get(id)
-            if (!result) res.status(404).send(new Response().error('Product not found'));
+            const result = await compsController.get(id)
+            if (!result) res.status(404).send(new Response().error('Company not found'));
             res.status(200).send(new Response().data(result))
         } catch (err) {
             res.status(500).send(new Response().error(err.message || err));
@@ -30,7 +30,7 @@ router
 
     .get('/', async (req, res) => {
         try {
-            const result = await prodController.getAll()
+            const result = await compsController.getAll()
             res.status(200).send(new Response().data(result))
         } catch (err) {
             res.status(500).send(new Response().error(err.message || err))
@@ -38,10 +38,10 @@ router
     })
 
     .put('/', async (req, res) => {
-        const {id, name, description, price, amount} = req.body
+        const {id, name, description, address} = req.body
 
         try {
-            const result = await prodController.update(id, name, description, price, amount)
+            const result = await compsController.update(id, name, description, address)
             res.status(200).send(new Response().data(result));
         } catch (err) {
             res.status(500).send(new Response().error(err.message || err))
@@ -52,7 +52,7 @@ router
         const {id} = req.params
 
         try {
-            const result = await prodController.delete(id)
+            const result = await compsController.delete(id)
             res.status(200).send(new Response().data(result))
         } catch (err) {
             res.status(500).send(new Response().error(err.message || err))
