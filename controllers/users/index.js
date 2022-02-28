@@ -1,4 +1,8 @@
 const db = require('../../models')
+const jwt = require('jsonwebtoken');
+const passport = require('passport');
+const bcrypt = require('bcrypt')
+const secret = require('../../config/config.json').secret
 
 const methods = {
     registration: null,
@@ -6,7 +10,7 @@ const methods = {
 }
 
 
-methods.registration = async function (firstName, lastName, password, email) {
+methods.registration = async function (firstName, lastName, password, email, role = 'user') {
 
     const user = await db.User.findOne({
         where: {
@@ -16,24 +20,39 @@ methods.registration = async function (firstName, lastName, password, email) {
     if (user) throw 'User already exist'
 
     const result = await db.User.create({
-        firstName, lastName, password, email
+        firstName, lastName, password, email, role
     })
     return result
 }
 
 methods.login = async function (password, email) {
-
-    const user = await db.User.findOne({
+    const user = await db.User
+      .findOne({
         where: {
-            email
+          email: email
         }
-    })
+      })
 
-    if (user.password !== password) {
-        throw 'Incorrect password'
+    if (!user) {
+        throw {
+            success: false,
+            message: 'Authentication failed. User not found.',
+        };
     }
-
-    return user
+    const passwordIsValid = bcrypt.compareSync(
+        password,
+        user.password
+      );
+    if (passwordIsValid) {
+        var token = jwt.sign(JSON.parse(JSON.stringify(user)), secret, {expiresIn: 86400 * 30});
+        jwt.verify(token, secret, function(err, data){
+            console.log(err, data);
+        })
+        return  {success: true, token};
+    }
+    else {
+        throw {success: false, message: 'Authentication failed. Wrong password.'};
+    }
 }
 
 // methods.test = async function () {

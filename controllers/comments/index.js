@@ -24,9 +24,8 @@ methods.get = async function (id) {
     return comment
 }
 
-methods.getAll = async function () {
-    const comment = await db.Comments.findAll()
-    return comment
+methods.getAll = async function () {  
+    return  await db.Comments.findAll()    
 }
 
 methods.update = async function (id, productId, content, userId, replyId) {

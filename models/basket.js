@@ -18,8 +18,8 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     Basket.init({
-        productId: DataTypes.INTEGER,
-        userId: DataTypes.INTEGER,
+        ProductId: DataTypes.INTEGER,
+        UserId: DataTypes.INTEGER,
         amount: DataTypes.INTEGER
     }, {
         sequelize,

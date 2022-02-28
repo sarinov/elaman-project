@@ -17,10 +17,10 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     Comments.init({
-        productId: DataTypes.INTEGER,
+        ProductId: DataTypes.INTEGER,
         content: DataTypes.STRING,
-        userId: DataTypes.INTEGER,
-        replyId: DataTypes.INTEGER
+        UserId: DataTypes.INTEGER,
+        ReplyId: DataTypes.INTEGER
     }, {
         sequelize,
         modelName: 'Comments',

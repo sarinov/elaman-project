@@ -8,16 +8,16 @@ module.exports = {
                 primaryKey: true,
                 type: Sequelize.INTEGER
             },
-            productId: {
+            ProductId: {
                 type: Sequelize.INTEGER
             },
             content: {
                 type: Sequelize.STRING
             },
-            userId: {
+            UserId: {
                 type: Sequelize.INTEGER
             },
-            replyId: {
+            ReplyId: {
                 type: Sequelize.INTEGER
             },
             createdAt: {

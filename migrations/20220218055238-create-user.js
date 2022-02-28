@@ -20,7 +20,7 @@ module.exports = {
             password: {
                 type: Sequelize.STRING
             },
-            companyId: {
+            CompanyId: {
                 type: Sequelize.INTEGER
             },
             role: {
