@@ -2,7 +2,8 @@ const {Router} = require('express');
 const router = Router();
 const prodController = require('../controllers/products')
 const Response = require('../utils/ApiResponse')
-const {isAdmin,verifyToken} = require('../middlewares/auth')
+const {verifyToken, isAdmin} = require('../middlewares/auth')
+
 router
 
     .post('/', verifyToken, isAdmin, async (req, res) => {
@@ -56,6 +57,15 @@ router
             res.status(200).send(new Response().data(result))
         } catch (err) {
             res.status(500).send(new Response().error(err.message || err))
+        }
+    })
+
+    .post('/test', async (req, res) => {
+        try {
+            const result = await prodController.test();
+            res.status(201).send(new Response().data(result));
+        } catch (err) {
+            res.status(500).send(new Response().error(err.message || err));
         }
     })
 

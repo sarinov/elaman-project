@@ -9,7 +9,6 @@ const methods = {
     login: null
 }
 
-
 methods.registration = async function (firstName, lastName, password, email, role = 'user') {
 
     const user = await db.User.findOne({
@@ -27,11 +26,11 @@ methods.registration = async function (firstName, lastName, password, email, rol
 
 methods.login = async function (password, email) {
     const user = await db.User
-      .findOne({
-        where: {
-          email: email
-        }
-      })
+        .findOne({
+            where: {
+                email: email
+            }
+        })
 
     if (!user) {
         throw {
@@ -42,15 +41,14 @@ methods.login = async function (password, email) {
     const passwordIsValid = bcrypt.compareSync(
         password,
         user.password
-      );
+    );
     if (passwordIsValid) {
         var token = jwt.sign(JSON.parse(JSON.stringify(user)), secret, {expiresIn: 86400 * 30});
-        jwt.verify(token, secret, function(err, data){
+        jwt.verify(token, secret, function (err, data) {
             console.log(err, data);
         })
-        return  {success: true, token};
-    }
-    else {
+        return {success: true, token};
+    } else {
         throw {success: false, message: 'Authentication failed. Wrong password.'};
     }
 }

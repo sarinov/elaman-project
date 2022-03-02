@@ -6,7 +6,8 @@ const methods = {
     get: null,
     getAll: null,
     update: null,
-    delete: null
+    delete: null,
+    test: null
 }
 
 methods.create = async function (name, description, price, amount) {
@@ -56,6 +57,22 @@ methods.delete = async function (id) {
         }
     })
 
+    return product
+}
+
+// TEST
+
+methods.test = async function () {
+    const product = await db.Product.findAll({
+        where:{
+            id: 5
+        },
+        include: [
+        {
+            model: db.Categories
+        }],
+        attributes:['Categories.name']
+    })
     return product
 }
 

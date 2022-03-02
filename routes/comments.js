@@ -2,10 +2,11 @@ const {Router} = require('express');
 const router = Router();
 const commentsController = require('../controllers/categories');
 const Response = require("../utils/ApiResponse");
+const {verifyToken, isAdmin} = require("../middlewares/auth");
 
 router
 
-    .post('/', async (req, res) => {
+    .post('/', verifyToken, isAdmin, async (req, res) => {
         const {productId, content, userId, replyId} = req.body
 
         try {
@@ -37,7 +38,7 @@ router
         }
     })
 
-    .put('/', async (req, res) => {
+    .put('/', verifyToken, isAdmin, async (req, res) => {
         const {id, productId, content, userId, replyId} = req.body
 
         try {
@@ -48,7 +49,7 @@ router
         }
     })
 
-    .delete('/:id', async (req, res) => {
+    .delete('/:id', verifyToken, isAdmin, async (req, res) => {
         const {id} = req.params
 
         try {
