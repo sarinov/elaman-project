@@ -7,21 +7,36 @@ const methods = {
     getAll: null,
     update: null,
     delete: null,
-    test: null
+    test: null,
+    incrementLike: null
 }
 
-methods.create = async function (name, description, price, amount) {
-    const product = await db.Product.findOne({
+methods.create = async function (name, description, price, amount, CategoryId, CompanyId) {
+    let ProductId = null;
+    let product = await db.Product.findOne({
         where: {
             name
         }
     })
-    if (product) throw 'Product already exist'
-
-    const result = await db.Product.create({
-        name, description, price, amount
+    if (product) {
+        ProductId = product.id
+    }
+    else{
+        product = await db.Product.create({
+            name, description, price, amount, CategoryId,
+        })
+        ProductId = product.id
+    }
+   
+    await db.Company_Products.findOrCreate({
+        where: {
+            CompanyId, ProductId
+        },
+        defaults: {
+            CompanyId, ProductId
+        }
     })
-    return result
+    return product
 }
 
 methods.get = async function (id) {
@@ -64,16 +79,23 @@ methods.delete = async function (id) {
 
 methods.test = async function () {
     const product = await db.Product.findAll({
-        where:{
-            id: 5
-        },
         include: [
         {
             model: db.Categories
         }],
-        attributes:['Categories.name']
+        attributes:['id','name','description', 'Category.name']
     })
     return product
+}
+
+methods.incrementLike = async function (id) {
+    const product = await db.Product.findOne({
+        where: {
+            id
+        }
+    })
+
+    return product.increment('like')
 }
 
 module.exports = methods;

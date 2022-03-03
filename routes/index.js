@@ -6,6 +6,7 @@ const users = require('./users');
 const companies = require('./companies')
 const categories = require('./categories')
 const comments = require('./comments')
+const basket = require('./basket')
 
 router
 
@@ -15,5 +16,6 @@ router
     .use('/companies', companies)
     .use('/categories', categories)
     .use('/comments', comments)
+    .use('/basket', basket)
 
 module.exports = router;

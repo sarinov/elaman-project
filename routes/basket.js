@@ -1,37 +1,28 @@
 const {Router} = require('express');
 const router = Router();
-const prodController = require('../controllers/products')
+const basketController = require('../controllers/basket')
 const Response = require('../utils/ApiResponse')
 const {verifyToken, isAdmin} = require('../middlewares/auth')
 
 router
 
-    .post('/', verifyToken, isAdmin, async (req, res) => {
-        const {name, description, price, amount, categoryId, companyId} = req.body
+    .post('/', verifyToken, async (req, res) => {
+        const { productId, amount } = req.body;
+        const { userId } = req;
 
         try {
-            const result = await prodController.create(name, description, price, amount, categoryId, companyId)
+            const result = await basketController.create(productId, userId, amount)
             res.status(201).send(new Response().data(result))
         } catch (err) {
             res.status(500).send(new Response().error(err.message || err))
         }
     })
 
-    .get('/:id', async (req, res) => {
-        const {id} = req.params
 
+    .get('/', verifyToken, async (req, res) => {
         try {
-            const result = await prodController.get(id)
-            if (!result) res.status(404).send(new Response().error('Product not found'));
-            res.status(200).send(new Response().data(result))
-        } catch (err) {
-            res.status(500).send(new Response().error(err.message || err));
-        }
-    })
-
-    .get('/', async (req, res) => {
-        try {
-            const result = await prodController.getAll()
+            const { userId } = req; 
+            const result = await basketController.getAll(userId)
             res.status(200).send(new Response().data(result))
         } catch (err) {
             res.status(500).send(new Response().error(err.message || err))
@@ -63,17 +54,6 @@ router
     .post('/test', async (req, res) => {
         try {
             const result = await prodController.test();
-            res.status(201).send(new Response().data(result));
-        } catch (err) {
-            res.status(500).send(new Response().error(err.message || err));
-        }
-    })
-
-    .put('/like/:id', async (req, res) => {
-        const {id} = req.params
-
-        try {
-            const result = await prodController.incrementLike(id);
             res.status(201).send(new Response().data(result));
         } catch (err) {
             res.status(500).send(new Response().error(err.message || err));

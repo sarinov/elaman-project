@@ -21,7 +21,14 @@ module.exports = {
                 type: Sequelize.STRING
             },
             CompanyId: {
-                type: Sequelize.INTEGER
+                type: Sequelize.INTEGER,
+                references: {
+                    model: {
+                      tableName: 'Companies',
+                      schema: 'public'
+                    },
+                    key: 'id'
+                }
             },
             role: {
                 type: Sequelize.STRING

@@ -9,10 +9,24 @@ module.exports = {
                 type: Sequelize.INTEGER
             },
             ProductId: {
-                type: Sequelize.INTEGER
+                type: Sequelize.INTEGER,
+                references: {
+                    model: {
+                      tableName: 'Products',
+                      schema: 'public'
+                    },
+                    key: 'id'
+                }
             },
             UserId: {
-                type: Sequelize.INTEGER
+                type: Sequelize.INTEGER,
+                references: {
+                    model: {
+                      tableName: 'Users',
+                      schema: 'public'
+                    },
+                    key: 'id'
+                }
             },
             amount: {
                 type: Sequelize.INTEGER

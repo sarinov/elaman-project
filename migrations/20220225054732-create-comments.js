@@ -9,13 +9,27 @@ module.exports = {
                 type: Sequelize.INTEGER
             },
             ProductId: {
-                type: Sequelize.INTEGER
+                type: Sequelize.INTEGER,
+                references: {
+                    model: {
+                      tableName: 'Products',
+                      schema: 'public'
+                    },
+                    key: 'id'
+                }
             },
             content: {
                 type: Sequelize.STRING
             },
             UserId: {
-                type: Sequelize.INTEGER
+                type: Sequelize.INTEGER,
+                references: {
+                    model: {
+                      tableName: 'Users',
+                      schema: 'public'
+                    },
+                    key: 'id'
+                }
             },
             ReplyId: {
                 type: Sequelize.INTEGER

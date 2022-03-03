@@ -27,7 +27,14 @@ module.exports = {
                 type: Sequelize.INTEGER
             },
             CategoryId: {
-                type: Sequelize.INTEGER
+                type: Sequelize.INTEGER,
+                references: {
+                    model: {
+                      tableName: 'Categories',
+                      schema: 'public'
+                    },
+                    key: 'id'
+                }
             },
             createdAt: {
                 allowNull: true,
