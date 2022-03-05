@@ -18,6 +18,16 @@ router
         }
     })
 
+    .put('/buy/:id', verifyToken, async (req, res) => {
+        const { id } = req.params;
+
+        try {
+            const result = await basketController.buy(id)
+            res.status(201).send(new Response().data(result))
+        } catch (err) {
+            res.status(500).send(new Response().error(err.message || err))
+        }
+    })
 
     .get('/', verifyToken, async (req, res) => {
         try {
@@ -30,10 +40,10 @@ router
     })
 
     .put('/', verifyToken, isAdmin, async (req, res) => {
-        const {id, name, description, price, amount} = req.body
+        const {id, amount} = req.body
 
         try {
-            const result = await prodController.update(id, name, description, price, amount)
+            const result = await basketController.update(id, amount)
             res.status(200).send(new Response().data(result));
         } catch (err) {
             res.status(500).send(new Response().error(err.message || err))
@@ -44,7 +54,7 @@ router
         const {id} = req.params
 
         try {
-            const result = await prodController.delete(id)
+            const result = await basketController.delete(id)
             res.status(200).send(new Response().data(result))
         } catch (err) {
             res.status(500).send(new Response().error(err.message || err))
@@ -53,7 +63,7 @@ router
 
     .post('/test', async (req, res) => {
         try {
-            const result = await prodController.test();
+            const result = await basketController.test();
             res.status(201).send(new Response().data(result));
         } catch (err) {
             res.status(500).send(new Response().error(err.message || err));

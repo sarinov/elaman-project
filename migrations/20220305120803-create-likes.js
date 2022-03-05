@@ -1,39 +1,32 @@
 'use strict';
 module.exports = {
     async up(queryInterface, Sequelize) {
-        await queryInterface.createTable('Baskets', {
+        await queryInterface.createTable('Likes', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
                 type: Sequelize.INTEGER
             },
-            ProductId: {
-                type: Sequelize.INTEGER,
-                references: {
-                    model: {
-                      tableName: 'Products',
-                      schema: 'public'
-                    },
-                    key: 'id'
-                }
-            },
             UserId: {
                 type: Sequelize.INTEGER,
                 references: {
                     model: {
-                      tableName: 'Users',
-                      schema: 'public'
+                        tableName: 'Users',
+                        schema: 'public'
                     },
                     key: 'id'
                 }
             },
-            amount: {
-                type: Sequelize.INTEGER
-            },
-            IsBuy: {
-                type: Sequelize.BOOLEAN,
-                defaultValue: false
+            ProductId: {
+                type: Sequelize.INTEGER,
+                references: {
+                    model: {
+                        tableName: 'Products',
+                        schema: 'public'
+                    },
+                    key: 'id'
+                }
             },
             createdAt: {
                 allowNull: true,
@@ -48,6 +41,6 @@ module.exports = {
         });
     },
     async down(queryInterface, Sequelize) {
-        await queryInterface.dropTable('Baskets');
+        await queryInterface.dropTable('Likes');
     }
 };

@@ -7,10 +7,10 @@ const {verifyToken, isAdmin} = require('../middlewares/auth')
 router
 
     .post('/', verifyToken, isAdmin, async (req, res) => {
-        const {name, description} = req.body // ??? надо добавить колонку description
+        const {name} = req.body
 
         try {
-            const result = await categoriesController.create(name, description)
+            const result = await categoriesController.create(name)
             res.status(201).send(new Response().data(result))
         } catch (err) {
             res.status(500).send(new Response().error(err.message || err))

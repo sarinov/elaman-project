@@ -5,11 +5,11 @@ const methods = {
     get: null,
     getAll: null,
     update: null,
-    delete: null
+    delete: null,
+    buy: null
 }
 
 methods.create = async function (ProductId, UserId, amount) {
-    
     const result = await db.Basket.create({
         ProductId, UserId, amount
     })
@@ -17,47 +17,69 @@ methods.create = async function (ProductId, UserId, amount) {
     return result
 }
 
-methods.get = async function (id) {
-    const category = await db.Categories.findOne({
+methods.buy = async function (id) {
+    const inBasket = await db.Basket.findOne({
         where: {
             id
         }
     })
-    return category
+
+    if (!inBasket) {
+        throw 'This record does not exist in your basket'
+    }
+    else {
+        const result = await db.Basket.update({
+            IsBuy: true
+        }, {
+            where: {
+                id
+            }
+        })
+        return result
+    }
+}
+
+methods.get = async function (id) {
+    const result = await db.Basket.findOne({
+        where: {
+            id
+        }
+    })
+    return result
 }
 
 methods.getAll = async function (UserId) {
-    const category = await db.Basket.findAll({
-        where: { UserId },
+    const result = await db.Basket.findAll({
+        where: {UserId},
         include: [{
             model: db.Product
         }],
         attributes: ['id', 'amount', 'Product.name']
 
     })
-    return category
+    return result
 }
 
-methods.update = async function (id, name, description) {
-    const category = await db.Categories.update({
-        name, description
+methods.update = async function (id, amount) {
+    const result = await db.Basket.update({
+        amount
     }, {
         where: {
             id
         }
     })
 
-    return category
+    return result
 }
 
 methods.delete = async function (id) {
-    const category = await db.Categories.destroy({
+    const result = await db.Basket.destroy({
         where: {
             id
         }
     })
 
-    return category
+    return result
 }
 
 module.exports = methods;

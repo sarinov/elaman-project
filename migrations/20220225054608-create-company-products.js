@@ -28,6 +28,19 @@ module.exports = {
                     key: 'id'
                 }
             },
+            amount: {
+                type: Sequelize.INTEGER
+                // ??? хотел сделать чтобы эмаунт брался из таблицы продукт, но выдает ошибку
+                // в целевой внешней таблице "Products" нет ограничения уникальности,
+                // соответствующего данным ключам
+                // references: {
+                //     model: {
+                //         tableName: 'Products',
+                //         schema: 'public'
+                //     },
+                //     key: 'amount'
+                // }
+            },
             createdAt: {
                 allowNull: true,
                 type: Sequelize.DATE,

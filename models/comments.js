@@ -12,7 +12,6 @@ module.exports = (sequelize, DataTypes) => {
         static associate(models) {
             models.Comments.belongsTo(models.Product)
             models.Comments.belongsTo(models.User)
-            models.Comments.belongsTo(models.Comments) // ??? хз как вытащить айди для реплайАйди
         }
     }
 

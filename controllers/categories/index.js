@@ -8,7 +8,7 @@ const methods = {
     delete: null
 }
 
-methods.create = async function (name, description) {
+methods.create = async function (name) {
     const category = await db.Categories.findOne({
         where: {
             name
@@ -17,7 +17,7 @@ methods.create = async function (name, description) {
     if (category) throw 'Category already exist'
 
     const result = await db.Categories.create({
-        name, description
+        name
     })
     return result
 }
@@ -36,9 +36,9 @@ methods.getAll = async function () {
     return category
 }
 
-methods.update = async function (id, name, description) {
+methods.update = async function (id, name) {
     const category = await db.Categories.update({
-        name, description
+        name
     }, {
         where: {
             id

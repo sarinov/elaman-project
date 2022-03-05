@@ -69,11 +69,48 @@ router
         }
     })
 
-    .put('/like/:id', async (req, res) => {
+    .put('/like/:id', verifyToken, async (req, res) => {
         const {id} = req.params
+        const {userId} = req
 
         try {
-            const result = await prodController.incrementLike(id);
+            const result = await prodController.incrementLike(userId, id);
+            res.status(201).send(new Response().data(result));
+        } catch (err) {
+            res.status(500).send(new Response().error(err.message || err));
+        }
+    })
+
+    .put('/dislike/:id', verifyToken, async (req, res) => {
+        const {id} = req.params
+        const {userId} = req
+
+        try {
+            const result = await prodController.incrementDislike(userId, id);
+            res.status(201).send(new Response().data(result));
+        } catch (err) {
+            res.status(500).send(new Response().error(err.message || err));
+        }
+    })
+
+    .put('/unlike/:id', verifyToken, async (req, res) => {
+        const {id} = req.params
+        const {userId} = req
+
+        try {
+            const result = await prodController.decrementLike(userId, id);
+            res.status(201).send(new Response().data(result));
+        } catch (err) {
+            res.status(500).send(new Response().error(err.message || err));
+        }
+    })
+
+    .put('/undislike/:id', verifyToken, async (req, res) => {
+        const {id} = req.params
+        const {userId} = req
+
+        try {
+            const result = await prodController.decrementDislike(userId, id);
             res.status(201).send(new Response().data(result));
         } catch (err) {
             res.status(500).send(new Response().error(err.message || err));

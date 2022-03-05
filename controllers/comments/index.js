@@ -2,17 +2,36 @@ const db = require('../../models')
 
 const methods = {
     create: null,
+    reply: null,
     get: null,
     getAll: null,
     update: null,
     delete: null
 }
 
-methods.create = async function (productId, content, userId, replyId) {
+methods.create = async function (ProductId, content, UserId) {
     const result = await db.Comments.create({
-        productId, content, userId, replyId
+        ProductId, content, UserId
     })
     return result
+}
+
+methods.reply = async function (id, content, UserId) {
+    const isComment = await db.Comments.findOne({
+        where: {
+            id
+        }
+    })
+
+    if (!isComment) {
+        throw 'Comment does not found!'
+    }
+    else {
+        const result = await db.Comments.create({
+            ProductId: isComment.ProductId, content, UserId, ReplyId: id
+        })
+        return result
+    }
 }
 
 methods.get = async function (id) {
