@@ -51,7 +51,7 @@ router
         }
     })
 
-    .put('/', verifyToken, async (req, res) => {
+    .put('/', verifyToken, isAdmin, async (req, res) => {
         const {id, productId, content, userId, replyId} = req.body
 
         try {
@@ -62,7 +62,7 @@ router
         }
     })
 
-    .delete('/:id', verifyToken, async (req, res) => {
+    .delete('/:id', verifyToken, isAdmin, async (req, res) => {
         const {id} = req.params
 
         try {

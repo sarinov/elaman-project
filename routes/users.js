@@ -70,14 +70,4 @@ router
         }
     })
 
-// .post('/test', async (req, res) => {
-//     try{
-//         const result = await userController.test();
-//         res.status(201).send(new Response().data(result));
-//     } catch (err) {
-//         res.status(500).send(new Response().error(err.message || err));
-//     }
-// })
-
-
 module.exports = router;

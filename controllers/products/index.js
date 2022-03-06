@@ -5,6 +5,7 @@ const methods = {
     create: null,
     get: null,
     getAll: null,
+    getAllProdsOfCompany: null,
     update: null,
     delete: null,
     test: null,
@@ -58,6 +59,19 @@ methods.getAll = async function () {
     return products
 }
 
+methods.getAllProdsOfCompany = async function (id) {
+    const items = await db.Company_Products.findAll({
+        where: {
+            CompanyId: id
+        },
+        include: [{
+            model: db.Product
+        }],
+        attributes: []
+    })
+    return items
+}
+
 methods.update = async function (id, name, description, price, amount) {
     const product = await db.Product.update({
         name, description, price, amount
@@ -77,17 +91,6 @@ methods.delete = async function (id) {
         }
     })
 
-    return product
-}
-
-methods.test = async function () {
-    const product = await db.Product.findAll({
-        include: [
-            {
-                model: db.Categories
-            }],
-        attributes: ['id', 'name', 'description', 'Category.name']
-    })
     return product
 }
 

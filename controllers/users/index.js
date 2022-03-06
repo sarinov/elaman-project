@@ -10,14 +10,12 @@ const methods = {
 }
 
 methods.registration = async function (firstName, lastName, password, email, role = 'user') {
-
     const user = await db.User.findOne({
         where: {
             email
         }
     })
     if (user) throw 'User already exist'
-
     const result = await db.User.create({
         firstName, lastName, password, email, role
     })
@@ -31,7 +29,6 @@ methods.login = async function (password, email) {
                 email: email
             }
         })
-
     if (!user) {
         throw {
             success: false,
@@ -52,23 +49,5 @@ methods.login = async function (password, email) {
         throw {success: false, message: 'Authentication failed. Wrong password.'};
     }
 }
-
-// methods.test = async function () {
-//
-//     const user = await db.Basket.findAll({
-//         where:{
-//             UserId: 1
-//         },
-//         include: [
-//         {
-//             model: db.Product
-//
-//         }],
-//         attributes:['Product.name']
-//
-//     })
-//
-//     return user
-// }
 
 module.exports = methods;

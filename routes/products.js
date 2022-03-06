@@ -38,6 +38,16 @@ router
         }
     })
 
+    .get('/prodsofcompany/:id', async (req, res) => {
+        const { id } = req.params
+        try {
+            const result = await prodController.getAllProdsOfCompany(id)
+            res.status(200).send(new Response().data(result))
+        } catch (err) {
+            res.status(500).send(new Response().error(err.message || err))
+        }
+    })
+
     .put('/', verifyToken, isAdmin, async (req, res) => {
         const {id, name, description, price, amount} = req.body
 
@@ -57,15 +67,6 @@ router
             res.status(200).send(new Response().data(result))
         } catch (err) {
             res.status(500).send(new Response().error(err.message || err))
-        }
-    })
-
-    .post('/test', async (req, res) => {
-        try {
-            const result = await prodController.test();
-            res.status(201).send(new Response().data(result));
-        } catch (err) {
-            res.status(500).send(new Response().error(err.message || err));
         }
     })
 

@@ -2,11 +2,11 @@ const db = require('../../models')
 
 const methods = {
     create: null,
+    buy: null,
     get: null,
     getAll: null,
     update: null,
-    delete: null,
-    buy: null
+    delete: null
 }
 
 methods.create = async function (ProductId, UserId, amount) {
