@@ -1,8 +1,10 @@
 const db = require('../../models')
-
+const { Op } = require('@sequelize/core')
 
 const methods = {
     create: null,
+    filterPrice: null,
+    filterDate: null,
     get: null,
     getAll: null,
     getAllProdsOfCompany: null,
@@ -30,7 +32,6 @@ methods.create = async function (name, description, price, amount, CategoryId, C
         })
         ProductId = product.id
     }
-
     await db.Company_Products.findOrCreate({
         where: {
             CompanyId, ProductId
@@ -40,6 +41,20 @@ methods.create = async function (name, description, price, amount, CategoryId, C
         }
     })
     return product
+}
+
+methods.filterPrice = async function() {
+    return await db.Product.findAll({
+        order: [['price', 'DESC']],
+        attributes: ['name', 'price']
+    })
+}
+
+methods.filterDate = async function() {
+    return await db.Product.findAll({
+        order: [['createdAt', 'DESC']],
+        attributes: ['name', 'createdAt']
+    })
 }
 
 methods.get = async function (id) {
@@ -80,7 +95,6 @@ methods.update = async function (id, name, description, price, amount) {
             id
         }
     })
-
     return product
 }
 
@@ -90,7 +104,6 @@ methods.delete = async function (id) {
             id
         }
     })
-
     return product
 }
 

@@ -17,6 +17,28 @@ router
         }
     })
 
+    .get('/filter/price', async (req, res) => {
+        try {
+            const result = await prodController.filterPrice()
+            res.status(200).send(new Response().data(result))
+        } catch (err) {
+            res.status(500).send(new Response().error(err.message || err))
+        }
+    })
+
+    .get('/filter/date', async (req, res) => {
+        try {
+            const result = await prodController.filterDate()
+            res.status(200).send(new Response().data(result))
+        } catch (err) {
+            res.status(500).send(new Response().error(err.message || err))
+        }
+    })
+
+    .get('/filter/date', async (req, res) => {
+
+    })
+
     .get('/:id', async (req, res) => {
         const {id} = req.params
 
