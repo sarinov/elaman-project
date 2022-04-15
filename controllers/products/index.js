@@ -1,5 +1,5 @@
 const db = require('../../models')
-const { Op } = require('@sequelize/core')
+const sequelize = require('sequelize')
 
 const methods = {
     create: null,
@@ -69,8 +69,28 @@ methods.get = async function (id) {
     return product
 }
 
-methods.getAll = async function () {
-    const products = await db.Product.findAll()
+methods.getAll = async function (options) {
+    const where = {};
+    if(!options.orderField){
+        options.orderField = 'price';
+    }
+    if(!options.orderType){
+        options.orderType = 'desc';
+    }
+    if(options.categoryId){
+       where.CategoryId = options.categoryId
+    }
+    if(options.name){
+       where.name = sequelize.where(sequelize.fn('LOWER', sequelize.col('name')), 'LIKE', '%' + options.name.toLowerCase() + '%')
+    }
+    console.log(where);
+    const products = await db.Product.findAll({
+        where,
+        order: [[options.orderField, options.orderType]],
+        include: [{
+            model: db.Categories
+        }]
+    })
     return products
 }
 

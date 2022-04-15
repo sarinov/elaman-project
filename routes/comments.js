@@ -18,17 +18,6 @@ router
         }
     })
 
-    .post('/reply', verifyToken, async (req, res) => {
-        const {id, content} = req.body;
-        const {userId} = req;
-
-        try {
-            const result = await commentsController.reply(id, content, userId)
-            res.status(201).send(new Response().data(result))
-        } catch (err) {
-            res.status(500).send(new Response().error(err.message || err))
-        }
-    })
 
     .get('/:id', async (req, res) => {
         const {id} = req.params

@@ -53,7 +53,8 @@ router
 
     .get('/', async (req, res) => {
         try {
-            const result = await prodController.getAll()
+            const { orderField, orderType, categoryId, name} = req.query;
+            const result = await prodController.getAll({orderField, orderType, categoryId, name})
             res.status(200).send(new Response().data(result))
         } catch (err) {
             res.status(500).send(new Response().error(err.message || err))
